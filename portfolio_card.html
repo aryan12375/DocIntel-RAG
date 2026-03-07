@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Card — RAG System</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #080c14;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .card {
+    width: 320px;
+    background: #0d1320;
+    border: 1px solid #1e2d45;
+    border-radius: 16px;
+    padding: 28px 26px 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(88,166,255,0.05), 0 24px 64px rgba(0,0,0,0.6);
+  }
+
+  /* Starfield dots */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 18% 22%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 73% 11%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 45%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 34% 68%, rgba(255,255,255,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 62% 81%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 9%  55%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 91% 78%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 50% 35%, rgba(255,255,255,0.15) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* Subtle teal glow top-right */
+  .card::after {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(20,210,180,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .title {
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: #e6edf3;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .desc {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: #8b9ab0;
+    line-height: 1.75;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #a8c4e0;
+    background: rgba(88,166,255,0.08);
+    border: 1px solid rgba(88,166,255,0.2);
+    border-radius: 20px;
+    padding: 4px 13px;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+    cursor: default;
+  }
+
+  .tag:hover {
+    background: rgba(88,166,255,0.16);
+    border-color: rgba(88,166,255,0.5);
+    color: #c8dcf0;
+    transform: translateY(-1px);
+  }
+
+  /* The replaced tag gets a slightly different accent to stand out cleanly */
+  .tag.new {
+    color: #9de0c8;
+    background: rgba(20,210,160,0.08);
+    border-color: rgba(20,210,160,0.22);
+  }
+  .tag.new:hover {
+    background: rgba(20,210,160,0.16);
+    border-color: rgba(20,210,160,0.5);
+    color: #b5edd8;
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    position: relative;
+  }
+
+  .btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 0;
+    border-radius: 9px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .btn-code {
+    background: rgba(88,166,255,0.1);
+    border: 1px solid rgba(88,166,255,0.25);
+    color: #7bb8f5;
+  }
+  .btn-code:hover {
+    background: rgba(88,166,255,0.18);
+    border-color: rgba(88,166,255,0.5);
+    color: #a8d0ff;
+    transform: translateY(-1px);
+  }
+
+  .btn-demo {
+    background: linear-gradient(135deg, #14c98a, #0ea572);
+    color: #001a0e;
+    font-weight: 700;
+    box-shadow: 0 4px 18px rgba(14,165,114,0.3);
+  }
+  .btn-demo:hover {
+    background: linear-gradient(135deg, #1ae097, #12b87e);
+    box-shadow: 0 6px 24px rgba(14,165,114,0.45);
+    transform: translateY(-1px);
+  }
+
+  /* Tooltip on LangChain-removal note */
+  .change-note {
+    position: absolute;
+    bottom: -26px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: #4a6070;
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h2 class="title">RAG-Based Document<br>Intelligence System</h2>
+
+  <p class="desc">
+    Built a system to upload documents and query them using
+    Retrieval-Augmented Generation. Features a confidence scorer and
+    source highlighting to pinpoint exact paragraphs used for answers.
+  </p>
+
+  <div class="tags">
+    <span class="tag">LLMs</span>
+    <span class="tag">RAG</span>
+    <span class="tag">NLP</span>
+    <span class="tag">Vector DBs</span>
+    <!-- ✅ Replaced "LangChain" — pipeline is fully custom-built, not LangChain-based -->
+    <span class="tag new">sentence-transformers</span>
+    <span class="tag">FAISS</span>
+    <span class="tag new">OpenAI</span>
+  </div>
+
+  <div class="actions" style="position:relative;">
+    <a class="btn btn-code" href="#" onclick="return false;">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+        <path d="M5 3L1 8l4 5M11 3l4 5-4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Code
+    </a>
+    <a class="btn btn-demo" href="#" onclick="return false;">
+      <svg width="11" height="13" viewBox="0 0 12 14" fill="none">
+        <path d="M1 1l10 6-10 6V1z" fill="currentColor"/>
+      </svg>
+      Live Demo
+    </a>
+  </div>
+</div>
+
+</body>
+</html>

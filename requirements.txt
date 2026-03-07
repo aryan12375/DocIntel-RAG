@@ -1,0 +1,33 @@
+# ──────────────────────────────────────────────────────────────
+# RAG Document Intelligence System — Dependencies
+# ──────────────────────────────────────────────────────────────
+
+# Core ML
+sentence-transformers>=2.7.0
+faiss-cpu>=1.8.0
+numpy>=1.26.0
+torch>=2.2.0               # sentence-transformers dependency
+
+# Document parsing
+pdfplumber>=0.11.0
+python-docx>=1.1.0
+
+# LLM
+openai>=1.30.0
+
+# Frontend
+streamlit>=1.35.0
+
+# OCR for scanned PDFs
+# Requires system binaries — add to packages.txt for Streamlit Cloud:
+#   tesseract-ocr
+#   tesseract-ocr-eng
+pytesseract>=0.3.10
+Pillow>=10.0.0
+
+# Optional: cross-encoder reranking
+# sentence-transformers already listed above (cross-encoder included)
+
+# Dev / testing
+pytest>=8.0.0
+pytest-cov>=5.0.0
