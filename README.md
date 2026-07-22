@@ -5,7 +5,7 @@
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11+-3776ab?logo=python&logoColor=white)](https://python.org)
 [![FAISS](https://img.shields.io/badge/FAISS-IndexFlatIP-4b8bbe)](https://github.com/facebookresearch/faiss)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.35-ff4b4b?logo=streamlit)](https://streamlit.io)
-[![Tests](https://img.shields.io/badge/Tests-pytest-green)](./tests/)
+[![Tests](https://img.shields.io/badge/Tests-33%20passing-brightgreen)](#running-tests)
 
 ---
 
@@ -194,9 +194,8 @@ rag_system/
 │   ├── embedder.py             # Batched embedding + disk cache
 │   ├── vector_store.py         # FAISS store + MMR + confidence calibration
 │   └── rag_pipeline.py         # Orchestrator: ingest + query + stream
-└── tests/
-    ├── test_chunker.py         # 14 unit tests for chunker
-    └── test_vector_store.py    # 14 unit tests for vector store
+├── test_chunker.py             # 18 unit tests for chunker
+└── test_vector_store.py        # 15 unit tests for vector store
 ```
 
 ---
@@ -204,11 +203,10 @@ rag_system/
 ## Running Tests
 
 ```bash
-cd rag_system
-pytest tests/ -v --tb=short
+pytest -v --tb=short
 ```
 
-Expected output: 28 tests, all passing.
+Expected output: 33 tests, all passing.
 
 ---
 
